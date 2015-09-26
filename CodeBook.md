@@ -1,70 +1,81 @@
-This README.md file describes the actions of the R script run_analysis.R.
+<b>Code book for tidydata.txt</b>
 
-The purpose of the script is to do the following:
--  Merge the training and test data sets to create one data set
-- Retain only those measurements relating to means and standard deviations
-- Use descriptive activity names to name the activities
-- Label the variables with descriptive names
-- From the data set created by steps 1-4, create a second tidy data set the average of each variable by activity and subject
+A couple of notes before getting into the main code book:
 
-The script merges the data from eight different files from the Human Activity Recognition Using Smartphones Data Set.
-(see http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones)
-The data set represents 561 measurements on six different activities for each of 30 subjects. Subjects were divided into a training set and a test set.
+1. Based on the discussion at https://class.coursera.org/getdata-032/forum/thread?thread_id=225 and the response by a Community TA, I have included only those variables in the tidy data set in this code book.
 
-Full data set: https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip
+2. Regarding the variable names for the feature measurements, they are already verging on being a bit long and unwieldy. Because of this, I chose not to expand things like 'Acc' into 'Accelerometer'.
 
-By unzipping the zip file in your working directory, the eight key files can be found in the following locations:
+<b>Variables in tidydata.txt</b>
 
-UCI HAR Dataset/train/X_train.txt
-UCI HAR Dataset/train/y_train.txt
-UCI HAR Dataset/train/subject_train.txt
-UCI HAR Dataset/test/X_test.txt
-UCI HAR Dataset/test/y_test.txt
-UCI HAR Dataset/test/subject_test.txt
-UCI HAR Dataset/features.txt
-UCI HAR Dataset/activity_labels.txt
+Subject 
+   Subject number (integer: 1 - 30)
 
-The content of these files is as follows:
-X_train.txt – Measurement values on 561 variables for the [] rows in the training set 
-X_test.txt – Measurements values on 561 variables for the [] rows in the test set 
-y_train.txt – The activity codes corresponding to the []rows in X_train.txt.
-y_test.txt – The activity codes corresponding to the [] rows in X_test.txt. 
-subject_train.txt – The subject numbers corresponding to the [] rows in X_train.txt. 
-subject_test.txt – The subjects numbers corresponding to the []rows in X_test.txt. 
-features.txt – The labels for the 561 feature measurement variables. 
-activity_labels.txt – The labels for the six activity codes. 
+Activity
+   Activity label (factor: "LAYING" "SITTING" "STANDING"
+                   "WALKING" "WALKING_DOWNSTAIRS" "WALKING_UPSTAIRS")
 
 
-The steps used to create the final tidy data file are outlined below. These same step numbers are included as comments in the script file.
+The 79 variables listed below are all numerical. Each value in the data set represents the <b>mean</b> of the given measurement type across subject and activity type. For example, a  value of tBodyAcc_mean_x  for a given subject and activity is the mean across the tBodyAcc_mean_x measurement…
+[] for every record corresponding to subject 13 performing the "LAYING"
+activity. That is, the value is a mean of means.  Similarly, the value for tBodyAcc_std_X is a mean of standard deviations.
 
-Step 1: Read in the eight key files and assign the data to the following data frame objects:
-	feature_labels (contents of ‘features.txt’)
-	activity_lables (contents of ‘activity_labels.txt’)
-	train_features (contents of ‘X_train.txt’)
-	train_activities (contents of ‘y_train.txt’)
-	train_subjects (contents of ‘subject_train.txt’)
-	test_features (contents of ‘X_train.txt’)
-	test_activities (contents of ‘y_train.txt’)
-	test_subjects (contents of ‘subject_train.txt’)
-	
-Step 2: Because there are 561 variables in each of the X_train.txt and X_test.txt files, check that the variable labels are identical and in the same order for the two files. 
+According to the README.txt file accompanying the data, the features have all been normalized and are bounded within [-1,1]. Because of this, they have not units.
 
-Step 3: Create an index object (‘mean_std_index’) that identifies the measurement variables that are related to means or standard deviations. This is done by using grep to search for “mean” or “std” or “meanFreq”. There are a number of other variables that include the string “Mean”, but these appear to be functions that make use of a mean-related variable, rather than being means themselves. For this reason, I chose not to include them in the final variable set.
+   tBodyAcc_mean_X, tBodyAcc_mean_Y,tBodyAcc_mean_Z      	
+   tBodyAcc_std_X, tBodyAcc_std_Y, tBodyAcc_std_Z		
 
-Step 4: Combine the training and test measurement data sets, keeping only the variables indexed in Step 3. Store the result in ‘all-features’.
+   tGravityAcc_mean_X, tGravityAcc_mean_Y, tGravityAcc_mean_Z		
+   tGravityAcc_std_X, tGravityAcc_std_Y, tGravityAcc_std_Z		
 
-Step 5: The 561 variables in the measurement data sets have the very non-useful names of V1-V561. Assign the variable names stored in ‘features.txt’ to the measurement variable names.  Again, use the index created in Step 3 to select out only the key [79] variables. In addition, remove all occurrences of “()” in the labels and change “-” to “_” in order to remove characters that may be problematic for certain R commands for other software.
+   tBodyAccJerk_mean_X, tBodyAccJerk_mean_Y, tBodyAccJerk_mean_Z		
+   tBodyAccJerk_std_X	, tBodyAccJerk_std_Y, tBodyAccJerk_std_Z		
 
-Step 6: Combine all the subject numbers, activity codes, and feature measurements for both the training and test sets. Store the combined data in ‘all_data’.
+   tBodyGyro_mean_X, tBodyGyro_mean_Y, tBodyGyro_mean_Z
+   tBodyGyro_std_X, tBodyGyro_std_Y, tBodyGyro_std_Z
 
-Step 7: Give the subject numbers and activity codes the more meaningful labels of ‘Subject’ and ‘Activity’.
+   tBodyGyroJerk_mean_X, tBodyGyroJerk_mean_Y, tBodyGyroJerk_mean_Z	
+   tBodyGyroJerk_std_X, tBodyGyroJerk_std_Y, tBodyGyroJerk_std_Z	
+   tBodyAccMag_mean, tBodyAccMag_std
+		
+   tGravityAccMag_mean, tGravityAccMag_std	
 
-Step 8: Merge the full data set (‘all_data’) with the activity labels to create a variable with meaningful activity labels rather than just the integers 1 through 6. Save the results in ‘merged_data’.
+   tBodyAccJerkMag_mean, tBodyAccJerkMag_std	
 
-Step 9: Arrange the variable order to have subject first, activity second, and then the [79] feature measurement variables following activity.
+   tBodyGyroMag_mean, tBodyGyroMag_std
 
-Step 10: Compute the means by subject and activity for all [79] feature measurements and save the results in ‘tidy_data’. Sort this file first by subject and then by activity.
+   tBodyGyroJerkMag_mean, tBodyGyroJerkMag_std
 
-Step 11: Save the tidy data to the file ‘tidydata.txt’.
+   fBodyAcc_mean_X, fBodyAcc_mean_Y, fBodyAcc_mean_Z
+   fBodyAcc_std_X, fBodyAcc_std_Y, fBodyAcc_std_Z
+
+   fBodyAcc_meanFreq_X, fBodyAcc_meanFreq_Y, fBodyAcc_meanFreq_Z
+   fBodyAccJerk_mean_X, fBodyAccJerk_mean_Y, fBodyAccJerk_mean_Z
+
+   fBodyAccJerk_std_X, fBodyAccJerk_std_Y, fBodyAccJerk_std_Z
+
+   fBodyAccJerk_meanFreq_X, fBodyAccJerk_meanFreq_Y, fBodyAccJerk_meanFreq_Z
+
+   fBodyGyro_mean_X, fBodyGyro_mean_Y, fBodyGyro_mean_Z
+   fBodyGyro_std_X, fBodyGyro_std_Y, fBodyGyro_std_Z
+
+   fBodyGyro_meanFreq_X, fBodyGyro_meanFreq_Y, fBodyGyro_meanFreq_Z
+
+   fBodyAccMag_mean, fBodyAccMag_std
+
+   fBodyAccMag_meanFreq
+
+   fBodyBodyAccJerkMag_mean, fBodyBodyAccJerkMag_std
+
+   fBodyBodyAccJerkMag_meanFreq
+
+   fBodyBodyGyroMag_mean, fBodyBodyGyroMag_std
+
+   fBodyBodyGyroMag_meanFreq
+
+   fBodyBodyGyroJerkMag_mean, fBodyBodyGyroJerkMag_std
+
+   fBodyBodyGyroJerkMag_meanFreq:
+
 
 
