@@ -1,4 +1,4 @@
-This README.md file describes the actions of the R script run_analysis.R.
+This README.md file describes the actions of the R script <b>run_analysis.R</b>.
 
 The purpose of the script is to do the following:
 -  Merge the training and test data sets to create one data set
