@@ -15,7 +15,7 @@
 #    contains the average of each variable across subject ID and activity type.
 
 
-setwd("C:/RProg/DataCleaning-proj") ### Set your own working directory here ###
+setwd("C:/RProg/DataCleaning-proj")   ### Set your own working directory here ###
 
 
 # Step 1

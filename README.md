@@ -1,4 +1,4 @@
-This README.md file describes the actions of the R script <b>run_analysis.R</b>.
+This README.md file describes the actions of the R script <b>run_analysis.R</b>.  
 
 The script merges the data from eight different files from the Human Activity Recognition Using Smartphones data set (see http://archive.ics.uci.edu/ml/datasets/Human+Activity+Recognition+Using+Smartphones).
 

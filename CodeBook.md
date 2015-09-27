@@ -1,4 +1,4 @@
-<b>Code book for tidydata.txt</b>
+<b>Code book for tidydata.txt</b>   
 
 A couple of notes before getting into the main code book:
 
