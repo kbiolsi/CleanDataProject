@@ -12,7 +12,7 @@
 # 3. Use descriptive activity names (rather than the integers 1-6).
 # 4. Label the variables with descriptive names (rather than names such as V1).
 # 5. From the data set created by steps 1-4, create a tidy data set that
-#    contains the average of each variable across subject and activity type.
+#    contains the average of each variable across subject ID and activity type.
 
 
 setwd("C:/RProg/DataCleaning-proj") ### Set your own working directory here ###
@@ -59,8 +59,8 @@ all_features<-rbind(train_features,test_features)[,mean_std_index]
 
 
 # Step 5
-# The feature variables are currently named V1 - V561. Use the feature_labels file
-# to assign more meaningful names. Before doing so, though remove "()" and
+# The feature variables are currently named V1 - V561. Use feature_labels 
+# to assign more meaningful names. Before doing so, though, remove "()" and
 # replace "-" with "_" in the names since these characters may be problematic.
 
 new_feature_labels<-feature_labels
@@ -69,7 +69,7 @@ names(all_features)<-new_feature_labels$V2[mean_std_index]
 
 
 # Step 6
-# Combine all subject numbers, activity codes, and features for both
+# Combine all subject ID numbers, activity codes, and features for both
 # the training and test sets.
 
 all_data<-cbind(rbind(train_activities,test_activities),
@@ -78,7 +78,7 @@ all_data<-cbind(rbind(train_activities,test_activities),
 
 
 # Step 7
-# Assign the subject number and activity code variables meaningful names.
+# Assign the subject ID number and activity code variables meaningful names.
 
 names(all_data)[1]<-"Activity"
 names(all_data)[2]<-"Subject_ID"
@@ -92,15 +92,15 @@ merged_data<-merge(all_data,activity_labels,by.x="Activity",by.y="V1",sort=FALSE
 
 
 # Step 9
-# Rearrange the variable order to place subject number first, activity type second,
+# Rearrange the variable order to place subject ID number first, activity type second,
 # and then all of the features. 
 final_data<-merged_data[c(2,ncol(merged_data),3:(ncol(merged_data)-1))]
 names(final_data)[2]="Activity"
 
 
 # Step 10
-# Compute means by subject and activity across all feature variables. Sort the
-# data by subject and activity.
+# Compute means by subject ID and activity across all feature variables. Sort the
+# data by subject ID and activity.
 tidy_data<-aggregate(.~Subject_ID+Activity,dat=final_data,mean)
 tidy_data<-tidy_data[order(tidy_data$Subject_ID,tidy_data$Activity),]
 
@@ -115,8 +115,3 @@ colnames(tidy_data)[3:81]<-paste("mn_",colnames(tidy_data)[3:81],sep="")
 # Step 12
 # Save to a .txt file.
 write.table(tidy_data,file="./tidydata.txt",row.name=FALSE)
-
-
-
-
-

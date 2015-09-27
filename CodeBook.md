@@ -11,20 +11,20 @@ A couple of notes before getting into the main code book:
 <b>Variables in data set</b>
 
 Subject 
-- Subject number (integer: 1 - 30)
+- Subject identification number (integer: 1 - 30)
 
 Activity
 - Activity label (factor: "LAYING" "SITTING" "STANDING"
                    "WALKING" "WALKING_DOWNSTAIRS" "WALKING_UPSTAIRS")
 
 <br /><br />
-Following “Activity”, there are 79 numerical variables representing various accelerometer and gyroscope measurements. The information concerning these variables comes from the “README.txt” and “feature_info.txt” files that accompany the various data files.
+Following “Activity”, there are 79 numerical variables representing various accelerometer and gyroscope measurements. The information concerning these variables comes from the “README.txt” and “feature_info.txt” files that accompany the various raw data files.
 
 All features come from either accelerometer (“Acc”) or gyroscope (“Gyro”) tri-axial (X, Y, Z) signals. Accelerometer signals were separated into body (“Body”) and gravity (“Gravity”) acceleration signals. 
 
 Features may represent either the time domain (denoted with a “t” prefix) or Fast Fourier Transforms applied to the signals (denoted with an “f” prefix).
 
-Jerk (“Jerk”) signals were obtained by deriving body linear acceleration and angular velocity in time and magnitudes (“Mag”) of three-dimensional signals were computed with a Euclidean norm. 
+Jerk (“Jerk”) signals were obtained by deriving body linear acceleration and angular velocity in time, and magnitudes (“Mag”) of three-dimensional signals were computed using a Euclidean norm. 
 
 According to the README.txt file accompanying the data, the measurements have all been normalized and are bounded within [-1,1]. Because of this, they have no units.
 
@@ -32,10 +32,10 @@ In pre-processing, only those variables that represent means (“_mean”), standard
 
 Final values in the data set are means computed across subject and activity type.
 
-Example variables:
+Example:
 - mn_tBodyAcc_X_mean: the mean of the means of the time domain body acceleration signals along the x-axis for the given subject and activity.
-- mn_fBodyGyroJerkMag_Z_std: the mean of the standard deviations of the Fast Fourier Transforms of the magnitudes of the gyroscopic body jerk signals across the given subject and activity.
 
+<br /><br />
 The 79 variables appear in the following order: <br />
 mn_tBodyAcc_mean_X<br />
 mn_tBodyAcc_mean_Y<br />
